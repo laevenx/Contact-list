@@ -2,13 +2,11 @@ import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {  getAllContacts, deleteContact } from '../store/actions'
 import Loader from 'react-loader-spinner';
-import Contact from './Contact'
 import {Link, useHistory} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-import { Table, Tag, Space } from 'antd';
+import { Table } from 'antd';
 
-const { Column, ColumnGroup } = Table;
 
 
 const Home = () => {
@@ -33,8 +31,12 @@ const Home = () => {
             confirmButtonText: 'Yes, delete it!'
           }).then((result) => {
             if (result.value) {
-                dispatch(deleteContact(id));
-                history.push("/");
+                dispatch(deleteContact(id))
+                .then((data) => {
+                  if(data){
+                    history.push("/");
+                  }
+                })
             }
           })
       }

@@ -21,15 +21,20 @@ const UpdateContact = () => {
         dispatch(getContactDetail(id))
     }, [dispatch,id])
 
-    function update (){
+   async function update (){
         const data = {
             firstName,
             lastName,
             age,
             photo
         }
-        dispatch(updateContact(data, id))
-        history.push('/')
+        await dispatch(updateContact(data, id))
+          .then((data) => {
+            if(data){
+              history.push('/')
+            }
+          })
+        
     }
 
     if (loading) return (<div style={{ marginTop: 200, textAlign: 'center' }}> <Loader type='Grid' color='#023E8A' /> </div>)

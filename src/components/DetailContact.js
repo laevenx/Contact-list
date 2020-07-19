@@ -31,8 +31,13 @@ const DetailContact = () => {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.value) {
-            dispatch(deleteContact(id));
-            history.push("/");
+            dispatch(deleteContact(id))
+            .then((data) => {
+              if(data){
+                history.push("/");
+              }
+            })
+            
         }
       })
   }
@@ -49,7 +54,7 @@ const DetailContact = () => {
     <div>
       <div className="row justify-content-md-center" style={{marginTop:20}}>
         <div className="col-10 col-md-8 col-lg-2 shadow p-3 mb-5 bg-white rounded">
-          <img src={contact.photo} style={{marginBottom:20}} />
+          <img src={contact.photo} style={{marginBottom:20, width: 280, height: 200}} />
           <h5>First Name:</h5><p> {contact.firstName}</p>
           <h5>Last Name: </h5><p>{contact.lastName}</p>
           <h5>Age: </h5><p>{contact.age}</p>

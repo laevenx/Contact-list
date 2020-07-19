@@ -22,7 +22,9 @@ export const FETCH_CONTACTDETAIL = 'FETCH_CONTACTDETAIL'
 export const FETCH_DELETECONTACT = 'FETCH_DELETECONTACT'
 export const LOADING = 'LOADING'
 export const ERROR = 'ERROR'
-// const history = useHistory()
+
+
+
 export const fetchContacts = (data) => {
     return {
         type: FETCH_CONTACTS,
@@ -140,11 +142,17 @@ export const createNewContact = (contact) => {
 }
 
 export const updateContact = (contact,id) => {
+    
     return(dispatch) => {
         dispatch(loading(true))
-        server.put('/contact/' + id , contact)
+        return server.put('/contact/' + id , contact)
         .then(({data}) => {
-
+            Toast.fire({
+                icon: 'success',
+                title: data.message
+              })
+              
+            return data
         })
         .catch(err => {
             console.log(err.response.data)
@@ -163,9 +171,14 @@ export const updateContact = (contact,id) => {
 export const deleteContact = (id) => {
     return(dispatch) => {
         dispatch(loading(true))
-        server.delete('/contact/' + id)
+        return server.delete('/contact/' + id)
             .then(({data}) => {
+                Toast.fire({
+                    icon: 'success',
+                    title: data.message
+                  })
                 dispatch(fetchDeleteContact(data))
+                return data
             })
             .catch(err => {
                 Toast.fire({
